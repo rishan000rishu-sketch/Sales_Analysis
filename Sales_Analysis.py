@@ -28,13 +28,20 @@ print(customer_sales.sort_values(ascending=False))
 df.to_excel('sales_data.xlsx', sheet_name='data',index=False)
 print('\nReport saved succesfuly')
 
+df["Date"] = pd.to_datetime(df["Date"])
+df["Month"] = df["Date"].dt.month
+
+monthly_sales = df.groupby('Month')['Total'].sum()
+print(monthly_sales)
+
 #Created product sales chart
-product_sales.plot(kind='bar')
+product_sales.plot(
+    kind='bar'
+)
 
 plt.title('Product Sales')
 plt.xlabel('Product')
 plt.ylabel('Revenue')
-
 plt.show()
 
 #Created city sales pie chart
@@ -42,7 +49,15 @@ city_sales.plot(
     kind='pie',
     autopct = '%1.1f%%'
 )
-
 plt.title('Sales by city')
 plt.ylabel('')
+plt.show()
+
+monthly_sales.plot(
+    kind='line',
+    marker = 'o'
+)
+plt.title('Monthly sales Trend')
+plt.xlabel('Month')
+plt.ylabel('Revenue')
 plt.show()
