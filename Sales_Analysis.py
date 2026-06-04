@@ -1,8 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from connector import conn, cursor
+
+query = 'SELECT * FROM Sales'
+df_sql = pd.read_sql(query, conn)
+print(df_sql)
+
 
 df = pd.read_excel('sales_data.xlsx', sheet_name='data')
-
 df['Total'] = df['Quantity'] * df['Price']
 print(df.columns)
 
